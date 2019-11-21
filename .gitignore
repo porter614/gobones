@@ -1,0 +1,15 @@
+# Binaries for programs and plugins
+*.exe
+*.dll
+*.so
+*.dylib
+*.DS_Store
+
+# We don't need the vendor dir
+/vendor
+
+# Ugh swap files
+*.swp
+
+# go.sum, for now. It shall return!
+go.sum

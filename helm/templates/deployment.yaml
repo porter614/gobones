@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+   name: {{ .Chart.Name }}
+spec:
+   selector:
+      matchLabels:
+         app: {{ .Chart.Name }}
+   replicas: {{ .Values.replicaCount }}
+   template:
+      metadata:
+         labels:
+            app: {{ .Chart.Name }}
+         annotations:
+            version: "{{ .Values.appVersion }}"
+            semVer: "{{ .Values.semVer }}"
+            buildDate: "{{ .Values.image.buildDate }}"
+            buildUser: "{{ .Values.image.buildUser }}"
+            branch: "{{ .Values.image.branch }}"
+            commitId: "{{ .Values.image.commitId }}"
+      spec:
+         containers:
+            - name: {{ .Chart.Name }}
+              image: "{{ .Values.image.repository }}/{{ .Chart.Name }}:{{ .Values.appVersion }}"
+              imagePullPolicy: "{{ .Values.image.pullPolicy }}"
+              volumeMounts:
+                - name: config-volume
+                  mountPath: /config
+              livenessProbe:
+                  exec:
+                      command:
+                          - /bin/app
+                          - probe
+                          - --type
+                          - live
+                  initialDelaySeconds: 5
+                  periodSeconds: 5
+              readinessProbe:
+                  exec:
+                      command:
+                          - /bin/app
+                          - probe
+                          - --type
+                          - ready
+                  initialDelaySeconds: 15
+                  periodSeconds: 5 
+         volumes:
+            - name: config-volume
+              configMap:
+                name: {{ .Chart.Name }}-config
+         imagePullSecrets:
+            - name: porter614-artifactory

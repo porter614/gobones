@@ -1,0 +1,9 @@
+
+{
+    "common": {
+        "log": {
+            "level": "info"
+        },
+        "poll-interval": 2
+    }
+}

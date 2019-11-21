@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Chart.Name }}-config
+  labels:
+     revision: active
+data:
+{{ (.Files.Glob "config/*").AsConfig | indent 2 }}
