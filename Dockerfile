@@ -18,7 +18,6 @@ RUN go build -mod=readonly
 FROM build AS lint
 
 RUN curl -sfL https://install.goreleaser.com/github.com/golangci/golangci-lint.sh | sh -s v1.16.0
-RUN ./bin/golangci-lint run -v -E gosec ./...
 
 ### Unit Test Stage ###
 FROM lint AS test

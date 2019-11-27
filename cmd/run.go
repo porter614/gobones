@@ -52,8 +52,8 @@ func run(cmd *cobra.Command, args []string) {
 				return
 			default:
 				// Main loop work goes here
-				log.Debug("Log level: ", viper.Get("common.log.level"))
-				log.Debug("Time: ", time.Now())
+				log.Info("Log level: ", viper.Get("common.log.level"))
+				log.Info("Time: ", time.Now())
 				time.Sleep(5 * time.Second)
 			}
 		}
